@@ -40,12 +40,18 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|max:100',
-            'phone' => 'required|unique:contacts'
+            'phone' => 'required|unique:contacts',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
+
+        $path = 'public/no-image.jpg';
+        if($request->hasFile('image'))
+            $path = $request->image->store('public');
 
         $contact = Contact::create([
             'name' => $request->name,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'image' => $path
         ]);
         $contact->save();
         
@@ -89,11 +95,20 @@ class ContactController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'phone' => 'required|unique:contacts,phone,'.$contact->id,
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
+
+        if($request->hasFile('image')){
+            $contact->deleteImage();
+            $path = $request->image->store('public');
+        }
+        else
+            $path = $contact->name;
 
         $contact->fill([
             'name' => $request->name,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'image' => $path
         ]);
         $contact->save();
         
@@ -109,6 +124,7 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
+        $contact->deleteImage();
         $contact->delete();
         return redirect()->route('contacts.index')
         ->with('succes', 'Contacto eliminado exitosamente.');        

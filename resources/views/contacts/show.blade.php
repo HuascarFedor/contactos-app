@@ -17,7 +17,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                    
-                    <div class="mx-auto card w-96 bg-base-100 shadow-xl">
+                    <div class="mx-auto card w-full md:w-96 bg-base-100 shadow-xl">
+                        <figure>
+                            <img class="w-full object-cover" src="{{ $contact->getUrlPathAttribute() }}" alt="Album">
+                        </figure>
                         <div class="card-body">
                           <h2 class="card-title">{{ $contact->name }}</h2>
                           <p>{{ $contact->phone }}</p>
