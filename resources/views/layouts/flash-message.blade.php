@@ -1,4 +1,4 @@
-@if ($message = Session::get('succes'))
+@if ($message = Session::get('success'))
     <div 
         x-data="{ show:false }"
         x-init="()=>{

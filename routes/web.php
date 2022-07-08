@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PhoneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,8 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource("contacts", ContactController::class)->middleware(['auth']);
+
+Route::resource("phones", PhoneController::class)->only([
+    'store',
+    'destroy'
+])->middleware(['auth']);

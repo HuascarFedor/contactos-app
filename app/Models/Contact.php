@@ -12,7 +12,7 @@ class Contact extends Model
 
     protected $fillable = [
         'name',
-        'phone',
+        //'phone',
         'image'
     ];
 
@@ -36,5 +36,9 @@ class Contact extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function phones(){
+        return $this->hasMany(Phone::class);
     }
 }

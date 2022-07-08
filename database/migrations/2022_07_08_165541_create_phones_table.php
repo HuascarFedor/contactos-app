@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            //$table->string('phone')->unique();
-            $table->string('image')->default('public/no-image.jpg');
-            
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-            ->references('id')->on('users')->
+            $table->string('description')->default('personal phone');
+            $table->string('number');
+
+            $table->unsignedBigInteger('contact_id');
+            $table->foreign('contact_id')
+            ->references('id')->on('contacts')->
             onUpdate('cascade')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('phones');
     }
 };

@@ -41,7 +41,7 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|max:100',
-            'phone' => 'required|unique:contacts',
+            //'phone' => 'required|unique:contacts',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
@@ -51,13 +51,13 @@ class ContactController extends Controller
 
         $contact = Contact::create([
             'name' => $request->name,
-            'phone' => $request->phone,
+            //'phone' => $request->phone,
             'image' => $path
         ]);
         $contact->save();
         
         return redirect()->route('contacts.index')
-        ->with('succes', 'Contacto añadido exitosamente.');
+        ->with('success', 'Contacto añadido exitosamente.');
     }
 
     /**
@@ -95,7 +95,7 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|max:100',
-            'phone' => 'required|unique:contacts,phone,'.$contact->id,
+            //'phone' => 'required|unique:contacts,phone,'.$contact->id,
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
@@ -104,17 +104,17 @@ class ContactController extends Controller
             $path = $request->image->store('public');
         }
         else
-            $path = $contact->name;
+            $path = $contact->image;
 
         $contact->fill([
             'name' => $request->name,
-            'phone' => $request->phone,
+            //'phone' => $request->phone,
             'image' => $path
         ]);
         $contact->save();
         
         return redirect()->route('contacts.index')
-        ->with('succes', 'Contacto modificado exitosamente.'); 
+        ->with('success', 'Contacto modificado exitosamente.'); 
     }
 
     /**
@@ -128,6 +128,6 @@ class ContactController extends Controller
         $contact->deleteImage();
         $contact->delete();
         return redirect()->route('contacts.index')
-        ->with('succes', 'Contacto eliminado exitosamente.');        
+        ->with('success', 'Contacto eliminado exitosamente.');        
     }
 }
